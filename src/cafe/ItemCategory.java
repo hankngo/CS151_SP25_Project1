@@ -11,4 +11,3 @@ public enum ItemCategory {
     TEA_HOT,
     TEA_COLD
 }
-

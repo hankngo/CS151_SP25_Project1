@@ -14,22 +14,9 @@ public class Cafe {
         menuItems.add(item);
     }
 
-    public void removeMenuItem(int itemID) {
-        menuItems.removeIf(item -> item.getItemID() == itemID); // Ensure getItemID() is defined
-    }
-
     public void displayMenu() {
         for (MenuItem item : menuItems) {
             item.displayItemDetails();
         }
-    }
-
-    public MenuItem findMenuItem(int itemID) {
-        for (MenuItem item : menuItems) {
-            if (item.getItemID() == itemID) { // Ensure getItemID() is defined
-                return item;
-            }
-        }
-        return null;
     }
 }

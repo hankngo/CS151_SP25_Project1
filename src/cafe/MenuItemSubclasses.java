@@ -1,10 +1,10 @@
 package cafe;
 
-import java.util.List;
+import java.util.Map;
 
 // Subclasses for each menu item
 class SweetPastry extends MenuItem {
-    public SweetPastry(int itemID, String name, double price, List<String> ingredients, String menu) {
+    public SweetPastry(int itemID, String name, double price, Map<String, Double> ingredients, String menu) {
         super(itemID, name, price, ingredients, menu, ItemCategory.PASTRIES_SWEET);
     }
 
@@ -20,7 +20,7 @@ class SweetPastry extends MenuItem {
 }
 
 class SavoryPastry extends MenuItem {
-    public SavoryPastry(int itemID, String name, double price, List<String> ingredients, String menu) {
+    public SavoryPastry(int itemID, String name, double price, Map<String, Double> ingredients, String menu) {
         super(itemID, name, price, ingredients, menu, ItemCategory.PASTRIES_SAVORY);
     }
 
@@ -36,7 +36,7 @@ class SavoryPastry extends MenuItem {
 }
 
 class SourdoughBread extends MenuItem {
-    public SourdoughBread(int itemID, String name, double price, List<String> ingredients, String menu) {
+    public SourdoughBread(int itemID, String name, double price, Map<String, Double> ingredients, String menu) {
         super(itemID, name, price, ingredients, menu, ItemCategory.BREAD_SOURDOUGH);
     }
 
@@ -52,7 +52,7 @@ class SourdoughBread extends MenuItem {
 }
 
 class BaguetteBread extends MenuItem {
-    public BaguetteBread(int itemID, String name, double price, List<String> ingredients, String menu) {
+    public BaguetteBread(int itemID, String name, double price, Map<String, Double> ingredients, String menu) {
         super(itemID, name, price, ingredients, menu, ItemCategory.BREAD_BAGUETTE);
     }
 
@@ -68,7 +68,7 @@ class BaguetteBread extends MenuItem {
 }
 
 class LatteCoffee extends MenuItem {
-    public LatteCoffee(int itemID, String name, double price, List<String> ingredients, String menu) {
+    public LatteCoffee(int itemID, String name, double price, Map<String, Double> ingredients, String menu) {
         super(itemID, name, price, ingredients, menu, ItemCategory.COFFEE_LATTE);
     }
 
@@ -84,7 +84,7 @@ class LatteCoffee extends MenuItem {
 }
 
 class HotCoffee extends MenuItem {
-    public HotCoffee(int itemID, String name, double price, List<String> ingredients, String menu) {
+    public HotCoffee(int itemID, String name, double price, Map<String, Double> ingredients, String menu) {
         super(itemID, name, price, ingredients, menu, ItemCategory.COFFEE_HOT);
     }
 
@@ -100,7 +100,7 @@ class HotCoffee extends MenuItem {
 }
 
 class ColdCoffee extends MenuItem {
-    public ColdCoffee(int itemID, String name, double price, List<String> ingredients, String menu) {
+    public ColdCoffee(int itemID, String name, double price, Map<String, Double> ingredients, String menu) {
         super(itemID, name, price, ingredients, menu, ItemCategory.COFFEE_COLD);
     }
 
@@ -116,7 +116,7 @@ class ColdCoffee extends MenuItem {
 }
 
 class HotTea extends MenuItem {
-    public HotTea(int itemID, String name, double price, List<String> ingredients, String menu) {
+    public HotTea(int itemID, String name, double price, Map<String, Double> ingredients, String menu) {
         super(itemID, name, price, ingredients, menu, ItemCategory.TEA_HOT);
     }
 
@@ -132,7 +132,7 @@ class HotTea extends MenuItem {
 }
 
 class ColdTea extends MenuItem {
-    public ColdTea(int itemID, String name, double price, List<String> ingredients, String menu) {
+    public ColdTea(int itemID, String name, double price, Map<String, Double> ingredients, String menu) {
         super(itemID, name, price, ingredients, menu, ItemCategory.TEA_COLD);
     }
 
