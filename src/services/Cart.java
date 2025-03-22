@@ -34,8 +34,7 @@ import exceptions.CheckoutException;
 public class Cart {
     private enum CheckoutOptions {PAY, CANCEL}
     private IEmployeeSystem es;
-    private Scanner scanner; // TODO: Scanner should be share or passed around
-    //  Scanner init in main or Cafe
+    private Scanner scanner;
     private Cafe cafe;
     private Employee employee;
     private List<MenuItem> cart;

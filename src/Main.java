@@ -2,9 +2,12 @@ import cafe.*;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
+        final Scanner scanner = new Scanner(System.in); // will be used for entire program
+
         // Create a cafe.
         Cafe cafe = new Cafe();
 
@@ -22,5 +25,11 @@ public class Main {
 
         // Display the cafe's menu.
         cafe.displayMenu();
+
+
+
+
+        // closing the program
+        scanner.close();
     }
 }
