@@ -28,6 +28,7 @@ import cafe.MenuItem;
 import membership.Member;
 import membership.MemberSignInUp;
 import model.Employee;
+import exceptions.CheckoutException;
 
 
 public class Cart {
@@ -52,13 +53,12 @@ public class Cart {
      * Put in order calls item from menuitem class
      * @param itemID
      */
-    public void addItem(int itemID) {
-        MenuItem addedItem = cafe.findMenuItem(itemID);
+    public void addItem(int itemID) throws IllegalArgumentException {
+        MenuItem addedItem = cafe.findMenuItemById(itemID);
         if (addedItem != null) {
             cart.add(addedItem);
         } else {
-            //TODO: error not in the list? or sold out (optional)
-            System.out.println("Item not avaiable in cafe's menu!");
+            throw new IllegalArgumentException("Item not avaiable in cafe's menu!");
         }
     }
 
@@ -66,13 +66,12 @@ public class Cart {
      * Remove item from cart
      * @param itemID
      */
-    public void removeItem(int itemID) {
-        MenuItem addedItem = cafe.findMenuItem(itemID);
+    public void removeItem(int itemID) throws IllegalArgumentException {
+        MenuItem addedItem = cafe.findMenuItemById(itemID);
         if (addedItem != null) {
             cart.remove(itemID);
         } else {
-            //TODO: error not in the list? or sold out (optional)
-            System.out.println("Item not existed in the cart!");
+            throw new IllegalArgumentException("Item not existed in the cart!");
         }
     }
 
@@ -80,8 +79,7 @@ public class Cart {
      * Checkout all items in cart, show cart details and the total or profit (for manager)
      * @throws IllegalStateException
      */
-    public void checkout () throws IllegalStateException //, TODO: throws CustomException
-    {
+    public void checkout() throws IllegalStateException, CheckoutException {
         if (cart == null || cart.isEmpty()) { throw new IllegalStateException("Cart is empty!"); }
 
         calculator.calculate(cart);
@@ -95,13 +93,17 @@ public class Cart {
 
         System.out.printf("Total: %d\n", total);
         if (member != null) {
-            double temp = total;
             total = member.applyDiscount(total);
-            System.out.printf("Discount: -%d", temp - total);
-            System.out.printf("Total: %d\n", total);
-            // display amount of points that can be gained
-            //TODO: member.convertCashToPoints (points that can be gained)
-            System.out.printf("Point Reward: %d",  0);
+            // System.out.printf("Your point: %d\n", 0); // TODO: show the customer's current point
+            if (member.convertPointsToCash() > total) {
+                double temp = total;
+                System.out.printf("Discount: -%d\n", temp - total);
+                System.out.printf("Total: %d\n", total);
+                // TODO: display amount of points that can be gained
+                // System.out.printf("Point Reward: %d\n",  0);
+            } else {
+                throw new IllegalStateException("Don't have enough points to checkout. Remove some item?");
+            }
         }
 
         // Customer can pay or cancel payment
@@ -115,7 +117,7 @@ public class Cart {
                     case PAY:
                         if (es.isManager(employee)) {
                             if (calculator.getProfit() < 0) {
-                                // throw new CustomException();
+                                throw new CheckoutException("Profit is negative! Check the cost of ingredients and items.");
                             } else {
                                 System.out.printf("Profit: %d", calculator.getProfit());
                                 // TODO: member.redeemPoints(member.convertCashToPoint())

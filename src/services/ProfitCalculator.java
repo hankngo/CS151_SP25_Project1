@@ -25,10 +25,9 @@ public class ProfitCalculator {
         double cost = 0;
         for (MenuItem item: cart) {
             total += item.getPrice();
-            // TODO: calculate cost. item.getIngredients() should return HashMap
-            // for (double c : item.getIngredients().values()) {
-            //     cost += c;
-            // }
+            for (double c : item.getIngredients().values()) {
+                cost += c;
+            }
         }
         this.profit = total - cost;
         this.total = total;

@@ -14,6 +14,7 @@ import java.util.Random;
 import java.util.HashMap;
 
 import model.Employee;
+import exceptions.EmployeeSystemException;
 
 public class EmployeeSystem implements IEmployeeSystem {
     private static final int MANAGERCODE = 151; // default
@@ -44,15 +45,13 @@ public class EmployeeSystem implements IEmployeeSystem {
      * Adds a new employee with a unique code. But only the manager able to do so.
      */
     @Override
-    public void addEmployee(Employee employee, Employee manager) {
+    public void addEmployee(Employee employee, Employee manager) throws IllegalArgumentException, EmployeeSystemException {
         if (employee == null) {  
-            System.out.println("Error: Cannot add a null employee.");
-            return;
+            throw new IllegalArgumentException("Error: Cannot add a null employee.");
         }
 
         if (manager == null || !isManager(manager)) {
-            System.out.println("Access Denied: Only a manager can add employees.");
-            return;
+            throw new EmployeeSystemException("Access Denied: Only a manager can add employees.");
         }
 
         if (!employees.containsKey(employee)) {
