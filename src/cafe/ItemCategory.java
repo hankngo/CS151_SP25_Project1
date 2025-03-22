@@ -1,5 +1,8 @@
 package cafe;
 
+/**
+ * Using enum method to represent difference categories of item for the cafe menu. 
+ */
 public enum ItemCategory {
     PASTRIES_SWEET,
     PASTRIES_SAVORY,
