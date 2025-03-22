@@ -1,3 +1,4 @@
+
 package cafe;
 
 import java.util.HashMap;
@@ -16,6 +17,17 @@ public class Cafe {
         menuItems.put(item.getName(), item);
     }
 
+
+	// Get all menu items
+	public Map<String, MenuItem> getMenuItems() {
+	    return menuItems;
+	}
+	
+	// Get a menu item by name
+	public MenuItem getMenuItem(String itemName) {
+	    return menuItems.get(itemName);
+	}
+	
     // Display Menu Item
     public void displayMenu() {
         for (Map.Entry<String, MenuItem> entry : menuItems.entrySet()) {
