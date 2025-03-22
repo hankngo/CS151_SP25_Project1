@@ -4,7 +4,7 @@ public class Employee {
     private String fname;
     private String lname;
     private int code; 
-    private int hoursWorked;
+    private double hoursWorked;
 
     public Employee(String fname, String lname) {
         this.fname = fname;
@@ -16,7 +16,7 @@ public class Employee {
         return this.fname + " " + this.lname;
     }
 
-    public void trackHours(int hours) {
+    public void trackHours(double hours) {
         this.hoursWorked += hours;
     }
 
@@ -24,7 +24,7 @@ public class Employee {
         return this.code;
     }
 
-    public int getHoursWorked() {
+    public double getHoursWorked() {
         return this.hoursWorked;
     }
 

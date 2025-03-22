@@ -46,15 +46,10 @@ public class EmployeeSystem implements IEmployeeSystem {
      */
     @Override
     public void addEmployeeByName(String fname, String lname, Employee manager) throws IllegalArgumentException, EmployeeSystemException {
-        if (employee == null) {  
-            throw new IllegalArgumentException("Error: Cannot add a null employee.");
-        }
+        if (manager == null) {throw new IllegalArgumentException("Invalid argument. Manager is null!");}
+        if (!isManager(manager)) {throw new EmployeeSystemException("Access Denied: Only a manager can add employees.");}
 
-        if (manager == null || !isManager(manager)) {
-            throw new EmployeeSystemException("Access Denied: Only a manager can add employees.");
-        }
-
-        bool isFound = false;
+        boolean isFound = false;
         for (Employee e : employees.keySet()) {
             if (e.getName().equals(fname + " " + lname)) {
                 isFound = true;
@@ -62,13 +57,14 @@ public class EmployeeSystem implements IEmployeeSystem {
             }
         }
         if (!isFound) {
+            Employee newEmployee = new Employee(fname, lname);
             int code;
             do {
                 code = random.nextInt(1000);
             } while (login(code) != null);
-            employee.setCode(code);
-            employees.put(employee, "employee");
-            System.out.printf("%s added with code: %d.\n", employee.getName(), code);
+            newEmployee.setCode(code);
+            employees.put(newEmployee, "employee");
+            System.out.printf("%s added with code: %d.\n", newEmployee.getName(), code);
         } else {
             throw new EmployeeSystemException("Employee already exists. Please enter a different name!");
         }
@@ -126,7 +122,7 @@ public class EmployeeSystem implements IEmployeeSystem {
     }
 
     @Override
-    public void trackEmployeeHours(Employee employee, int hours) {
+    public void trackEmployeeHours(Employee employee, double hours) {
         employee.trackHours(hours);
         System.out.println(employee.getName() + " has " + employee.getHoursWorked() + " hours worked.");
     }

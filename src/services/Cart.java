@@ -33,6 +33,7 @@ import exceptions.CheckoutException;
 
 public class Cart {
     private enum CheckoutOptions {PAY, CANCEL}
+    public static final String EXIT = "EXIT";
     private IEmployeeSystem es;
     private Scanner scanner;
     private Cafe cafe;
@@ -46,6 +47,7 @@ public class Cart {
         this.employee = employee;
         this.scanner = scanner;
         this.cart = new ArrayList<>();
+        this.calculator = new ProfitCalculator();
     }
 
     /**
@@ -56,6 +58,7 @@ public class Cart {
         MenuItem addedItem = cafe.findMenuItemById(itemID);
         if (addedItem != null) {
             cart.add(addedItem);
+            System.out.printf("Added item ID: %d\n", itemID);
         } else {
             throw new IllegalArgumentException("Item not avaiable in cafe's menu!");
         }
@@ -69,6 +72,7 @@ public class Cart {
         MenuItem addedItem = cafe.findMenuItemById(itemID);
         if (addedItem != null) {
             cart.remove(itemID);
+            System.out.printf("Removed item ID: %d\n", itemID);
         } else {
             throw new IllegalArgumentException("Item not existed in the cart!");
         }
@@ -78,8 +82,11 @@ public class Cart {
      * Checkout all items in cart, show cart details and the total or profit (for manager)
      * @throws IllegalStateException
      */
-    public void checkout() throws IllegalStateException, CheckoutException {
-        if (cart == null || cart.isEmpty()) { throw new IllegalStateException("Cart is empty!"); }
+    public void checkout() throws CheckoutException {
+        if (cart == null || cart.isEmpty()) { 
+            System.out.println("Cart is empty!"); 
+            return;
+        }
 
         calculator.calculate(cart);
         double total = calculator.getTotal();
@@ -87,17 +94,17 @@ public class Cart {
 
         // Displays items and cost for customer
         for (MenuItem item: cart) {
-            System.out.printf("Item: %s. Price: %d\n", item.getName(), item.getPrice());
+            System.out.printf("Item: %s. Price: $%.2f\n", item.getName(), item.getPrice());
         }
 
-        System.out.printf("Total: %d\n", total);
+        System.out.printf("Total: $%.2f\n", total);
         if (member != null) {
             total = member.applyDiscount(total);
-            // System.out.printf("Your point: %d\n", 0); // TODO: show the customer's current point
+            System.out.printf("Your balance: $%.2f\n", member.convertPointsToCash());
             if (member.convertPointsToCash() > total) {
                 double temp = total;
-                System.out.printf("Discount: -%d\n", temp - total);
-                System.out.printf("Total: %d\n", total);
+                System.out.printf("Discount: -$%.2f\n", temp - total);
+                System.out.printf("Total: $%.2f\n", total);
                 // TODO: display amount of points that can be gained
                 // System.out.printf("Point Reward: %d\n",  0);
             } else {
@@ -107,18 +114,24 @@ public class Cart {
 
         // Customer can pay or cancel payment
         CheckoutOptions checkoutChoice = null;
+        String input;
         do {
-            System.out.println("\n1. PAY \t2. CANCEL\nCheckout: ");
+            System.out.print("\n1. PAY \t2. CANCEL\nCheckout: ");
             try {
-                int choice = Integer.parseInt(scanner.nextLine().trim());
-                checkoutChoice = getCheckoutOpt(choice);
+                input = scanner.nextLine().trim();
+                if (input.equalsIgnoreCase(EXIT)) break;
+                checkoutChoice = getCheckoutOpt(Integer.parseInt(input));
+                if (checkoutChoice == null) { 
+                    System.out.println("Unexpected checkout choice!"); 
+                    continue;
+                }
                 switch (checkoutChoice) {
                     case PAY:
                         if (es.isManager(employee)) {
                             if (calculator.getProfit() < 0) {
                                 throw new CheckoutException("Profit is negative! Check the cost of ingredients and items.");
                             } else {
-                                System.out.printf("Profit: %d", calculator.getProfit());
+                                System.out.printf("Profit: $%.2f", calculator.getProfit());
                                 // TODO: member.redeemPoints(member.convertCashToPoint())
                                 member.addPoints(total);
                             }
@@ -126,10 +139,7 @@ public class Cart {
                         break;
                     case CANCEL:
                         cart.clear();
-                        System.out.printf("Total: %d\n", 0);
-                        break;
-                    default:
-                        System.out.println("Unexpected checkout choice!");
+                        System.out.println("Total: $0.0\n");
                         break;
                 }
             } catch (NumberFormatException e) {
