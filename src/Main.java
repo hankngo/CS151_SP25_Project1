@@ -114,9 +114,9 @@ public class Main {
 
         // Define ingredients for a latte.
         Map<String, Double> latteIngredients = new HashMap<>();
-        latteIngredients.put("Espresso", 30.0); // 30ml of espresso.
-        latteIngredients.put("Milk", 200.0); // 200ml of milk.
-        latteIngredients.put("Sugar", 10.0); // 10g of sugar.
+        latteIngredients.put("Espresso", 1.0); // 30ml of espresso.
+        latteIngredients.put("Milk", 0.5); // 200ml of milk.
+        latteIngredients.put("Sugar", 0.1); // 10g of sugar.
 
         // Create a latte coffee item.
         MenuItemSubclasses.LatteCoffee latte = new MenuItemSubclasses.LatteCoffee(1, "Latte", 4.5, latteIngredients,

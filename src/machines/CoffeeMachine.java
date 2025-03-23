@@ -2,20 +2,27 @@ package machines;
 
 import exceptions.MachineFailureException;
 import exceptions.TooManyInstanceException;
+import cafe.MenuItem;
+import cafe.MenuItemSubclasses;
 
 public class CoffeeMachine extends Machine {
 
     private int numCoffeeMachines = 0;
 
-    public CoffeeMachine() throws TooManyInstanceException
+    public CoffeeMachine()
     {
-        if(numCoffeeMachines > 100)
+        numCoffeeMachines++;
+    }
+
+    public boolean checkCoffee(MenuItem m)
+    {
+        if(m instanceof MenuItemSubclasses.HotCoffee || m instanceof MenuItemSubclasses.ColdCoffee)
         {
-            throw new TooManyInstanceException("Too many coffee machines! (>100)");
+            return true;
         }
         else
         {
-            numCoffeeMachines++;
+            return false;
         }
     }
 
@@ -69,8 +76,13 @@ public class CoffeeMachine extends Machine {
         totalMachineRepairCosts = (int)(totalMachineRepairCosts * 100) / 100.0;
     }
 
-    public void setNumCoffeeMachines(int num)
+    public void setNumCoffeeMachines(int num) throws TooManyInstanceException
     {
+        if(num > 100)
+        {
+            throw new TooManyInstanceException("Please input a positive integer less than 100.");
+        }
+
         numCoffeeMachines = num;
     }
 

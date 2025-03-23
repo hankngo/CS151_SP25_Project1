@@ -1,5 +1,7 @@
 package machines;
 
+import cafe.MenuItem;
+import cafe.MenuItemSubclasses;
 import exceptions.MachineFailureException;
 import exceptions.TooManyInstanceException;
 
@@ -7,15 +9,20 @@ public class EspressoMachine extends Machine {
 
     private int numEspressoMachines = 0;
 
-    public EspressoMachine() throws TooManyInstanceException
+    public EspressoMachine()
     {
-        if(numEspressoMachines > 100)
+        numEspressoMachines++;
+    }
+
+    public boolean checkEspresso(MenuItem m)
+    {
+        if(m instanceof MenuItemSubclasses.LatteCoffee)
         {
-            throw new TooManyInstanceException("Too many espresso machines! (>100)");
+            return true;
         }
         else
         {
-            numEspressoMachines++;
+            return false;
         }
     }
 
@@ -53,6 +60,21 @@ public class EspressoMachine extends Machine {
             System.out.println("Espresso machine broke.");
             throw new MachineFailureException("The espresso machine needs to be repaired.");
         }
+    }
+
+    public int getNumEspressoMachines()
+    {
+        return numEspressoMachines;
+    }
+
+    public void setNumEspressoMachines(int num) throws TooManyInstanceException
+    {
+        if(num > 100)
+        {
+            throw new TooManyInstanceException("Please input a positive integer less than 100.");
+        }
+        
+        numEspressoMachines = num;
     }
 
     @Override

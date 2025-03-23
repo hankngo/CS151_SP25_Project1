@@ -1,5 +1,7 @@
 package machines;
 
+import cafe.MenuItem;
+import cafe.MenuItemSubclasses;
 import exceptions.MachineFailureException;
 import exceptions.TooManyInstanceException;
 
@@ -7,15 +9,20 @@ public class Kettle extends Machine {
 
     private int numKettles = 0;
 
-    public Kettle() throws TooManyInstanceException
+    public Kettle()
     {
-        if(numKettles > 100)
+        numKettles++;
+    }
+
+    public boolean checkTea(MenuItem m)
+    {
+        if(m instanceof MenuItemSubclasses.ColdTea || m instanceof MenuItemSubclasses.HotTea)
         {
-            throw new TooManyInstanceException("Too many kettle machines! (>100)");
+            return true;
         }
         else
         {
-            numKettles++;
+            return false;
         }
     }
 
@@ -53,6 +60,21 @@ public class Kettle extends Machine {
             System.out.println("Kettle broke.");
             throw new MachineFailureException("The kettle needs to be repaired.");
         }
+    }
+
+    public int getNumKettles()
+    {
+        return numKettles;
+    }
+
+    public void setNumKettles(int num) throws TooManyInstanceException
+    {
+        if(num > 100)
+        {
+            throw new TooManyInstanceException("Please input a positive integer less than 100.");
+        }
+        
+        numKettles = num;
     }
 
     @Override

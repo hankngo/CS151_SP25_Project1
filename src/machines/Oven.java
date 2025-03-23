@@ -1,5 +1,7 @@
 package machines;
 
+import cafe.MenuItem;
+import cafe.MenuItemSubclasses;
 import exceptions.MachineFailureException;
 import exceptions.TooManyInstanceException;
 
@@ -7,15 +9,21 @@ public class Oven extends Machine {
 
     private int numOvens = 0;
 
-    public Oven() throws TooManyInstanceException
+    public Oven()
     {
-        if(numOvens > 100)
+        numOvens++;
+    }
+
+    public boolean checkPastry(MenuItem m)
+    {
+        if(m instanceof MenuItemSubclasses.SweetPastry || m instanceof MenuItemSubclasses.SavoryPastry
+            || m instanceof MenuItemSubclasses.SourdoughBread || m instanceof MenuItemSubclasses.BaguetteBread)
         {
-            throw new TooManyInstanceException("Too many ovens! (>100)");
+            return true;
         }
         else
         {
-            numOvens++;
+            return false;
         }
     }
 
@@ -39,6 +47,21 @@ public class Oven extends Machine {
             }
         }
         System.out.println("Created " + num + " orders of bread/pastries.");
+    }
+
+    public int getNumOvens()
+    {
+        return numOvens;
+    }
+
+    public void setNumOvens(int num) throws TooManyInstanceException
+    {
+        if(num > 100)
+        {
+            throw new TooManyInstanceException("Please input a positive integer less than 100.");
+        }
+        
+        numOvens = num;
     }
 
     @Override
