@@ -134,9 +134,12 @@ public class Cart {
                             if (calculator.getProfit() < 0) {
                                 throw new CheckoutException("Profit is negative! Check the cost of ingredients and items.");
                             } else {
-                                System.out.printf("Profit: $%.2f", calculator.getProfit());
+                                System.out.printf("Profit: $%.2f\n", calculator.getProfit());
                                 // TODO: member.redeemPoints(member.convertCashToPoint())
-                                member.addPoints(total);
+                                if(member != null)
+                                {
+                                    member.addPoints(total);
+                                }
                             }
                         }
                         break;

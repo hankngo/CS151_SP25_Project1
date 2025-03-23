@@ -9,6 +9,10 @@ import java.util.Map;
 import cafe.Cafe;
 import cafe.MenuItem; 
 import cafe.MenuItemSubclasses;
+import machines.CoffeeMachine;
+import machines.EspressoMachine;
+import machines.Kettle;
+import machines.Oven;
 
 public class MainTest {
 
@@ -116,4 +120,23 @@ public class MainTest {
             fail("Exception occurred: " + e.getMessage());
         }
     }
+
+    //Continue to work on this for JUnit extra credit (4/1)
+    /* 
+    @Test
+    public void testMachines()
+    {
+        try
+        {
+            CoffeeMachine coffee = new CoffeeMachine();
+            EspressoMachine espresso = new EspressoMachine();
+            Kettle kettle = new Kettle();
+            Oven oven = new Oven();
+        }
+        catch(Exception e)
+        {
+            fail("Exception occurred: " + e.getMessage());
+        }
+    }
+    */
 }
