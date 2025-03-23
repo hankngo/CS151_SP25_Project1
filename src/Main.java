@@ -161,7 +161,7 @@ public class Main {
                                     + "5. Log out\n");
                             System.out.print("\nEnter your choice: ");
                             input = scanner.nextLine().trim();
-                            switch (input) {
+                            switch (input.toUpperCase()) {
                                 case "1":
                                     ringUpCustomer(cart, scanner);
                                     break;
