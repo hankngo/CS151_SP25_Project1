@@ -16,11 +16,9 @@ import java.util.Scanner;
 
 
 public class MemberSignInUp {
-   private static final Scanner scanner = new Scanner(System.in);
-
-
-   /* checks to see if you are a member and acts as sign in functionality */
-   public static Member handleMembership() {
+   
+    /* checks to see if you are a member and acts as sign in functionality */
+   public static Member handleMembership(Scanner scanner) {
        System.out.println("Welcome! Are you a member? (yes/no)");
        String response = scanner.nextLine().trim().toLowerCase();
 
