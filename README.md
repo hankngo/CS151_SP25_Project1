@@ -4,7 +4,7 @@
 The Cafe Management System is a software application that automates and ensures the accuracy of cafe operations, handles menu items, accepts client orders, evaluates employee work hours, and manages membership benefits.
 
 ## UML Diagram
-![Project 1's UML Diagram](Project1_UML.drawio.png)
+![Project 1's UML Diagram](CS151_Project1_UML.drawio.png)
 
 ## Features 
 
