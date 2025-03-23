@@ -1,10 +1,23 @@
 package machines;
 
 import exceptions.MachineFailureException;
+import exceptions.TooManyInstanceException;
 
 public class CoffeeMachine extends Machine {
 
     int numCoffeeMachines = 0;
+
+    public CoffeeMachine() throws TooManyInstanceException
+    {
+        if(numCoffeeMachines > 100)
+        {
+            throw new TooManyInstanceException("Too many coffee machines! (>100)");
+        }
+        else
+        {
+            numCoffeeMachines++;
+        }
+    }
 
     public void createCoffee(int num)
     {
@@ -46,15 +59,17 @@ public class CoffeeMachine extends Machine {
     public void fix()
     {
         setBrokenStatus(false);
-        //either set to zero or subtract a certain percent (i.e. 70%) of uses from the uses counter
-        addUses(0);
-        System.out.println("Repairing...");
-        //100-500 dollars
+        //Subtract 70% of uses from the uses counter to simulate realism in repairing machine
+        addUses(-1 * (int)(getUses() * 0.7));
+        System.out.println("Repaired coffee machine.");
+
+        //Cost of repair: $100-500
         double randomCost = (int)(((Math.random() * 400) + 100) * 100) / 100.0;
         totalMachineRepairCosts += randomCost;
         totalMachineRepairCosts = (int)(totalMachineRepairCosts * 100) / 100.0;
     }
 
+    @Override
     public double failureOdds()
     {
         return 0.0001 + (0.0001 * getUses());
