@@ -5,7 +5,7 @@ import exceptions.TooManyInstanceException;
 
 public class CoffeeMachine extends Machine {
 
-    int numCoffeeMachines = 0;
+    private int numCoffeeMachines = 0;
 
     public CoffeeMachine() throws TooManyInstanceException
     {
@@ -42,7 +42,7 @@ public class CoffeeMachine extends Machine {
     }
 
     @Override
-    public void useMachine() throws MachineFailureException
+    protected void useMachine() throws MachineFailureException
     {
         double random = Math.random();
         double failureOdds = failureOdds();
@@ -56,7 +56,7 @@ public class CoffeeMachine extends Machine {
     }
 
     @Override
-    public void fix()
+    protected void fix()
     {
         setBrokenStatus(false);
         //Subtract 70% of uses from the uses counter to simulate realism in repairing machine
@@ -67,6 +67,16 @@ public class CoffeeMachine extends Machine {
         double randomCost = (int)(((Math.random() * 400) + 100) * 100) / 100.0;
         totalMachineRepairCosts += randomCost;
         totalMachineRepairCosts = (int)(totalMachineRepairCosts * 100) / 100.0;
+    }
+
+    public void setNumCoffeeMachines(int num)
+    {
+        numCoffeeMachines = num;
+    }
+
+    public int getNumCoffeeMachines()
+    {
+        return numCoffeeMachines;
     }
 
     @Override

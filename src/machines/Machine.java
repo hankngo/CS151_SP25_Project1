@@ -7,7 +7,7 @@ public abstract class Machine implements Maintainable {
     private boolean brokenStatus;
     private int uses;
 
-    public static double totalMachineRepairCosts;
+    public static double totalMachineRepairCosts = 0.0;
 
     public Machine()
     {
@@ -33,8 +33,7 @@ public abstract class Machine implements Maintainable {
         this.uses += num;
     }
 
-    @Override
-    public abstract void useMachine() throws MachineFailureException;
+    protected abstract void useMachine() throws MachineFailureException;
 
     @Override
     public boolean getBrokenStatus() {
@@ -47,8 +46,7 @@ public abstract class Machine implements Maintainable {
         this.brokenStatus = status;
     }
 
-    @Override
-    public abstract void fix();
+    protected abstract void fix();
 
     @Override
     public abstract double failureOdds();
