@@ -93,7 +93,7 @@ public class Cart {
 
         calculator.calculate(cart);
         double total = calculator.getTotal();
-        Member member = MemberSignInUp.handleMembership();
+        Member member = MemberSignInUp.handleMembership(scanner);
 
         // Displays items and cost for customer
         for (MenuItem item: cart) {

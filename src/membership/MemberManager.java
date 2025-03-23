@@ -9,6 +9,8 @@ package membership;
 import java.util.HashMap;
 import java.util.Map;
 
+import exceptions.TooManyInstanceException;
+
 
 public class MemberManager {
 
@@ -25,14 +27,14 @@ public class MemberManager {
            if (members.containsKey(phoneNumber)) {
                throw new IllegalArgumentException("Invalid phone number. Phone number already in use.");
            }
-
-
+           
+           if (members.size() >= 100) {throw new TooManyInstanceException("Too many instances! Unfortunately, our cafe can only add up to 100 memebers.");}
            /* creates new member */
            Member newMember = new Member(firstName, lastName, phoneNumber, tier);
            members.put(phoneNumber, newMember);
            System.out.println("Membership created successfully!");
            return newMember;
-       } catch (IllegalArgumentException e) {
+       } catch (IllegalArgumentException | TooManyInstanceException e) {
            System.out.println("Error: " + e.getMessage());
            return null;
        }

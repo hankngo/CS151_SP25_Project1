@@ -1,9 +1,10 @@
 # Cafe Management System 
 
 ## Overview
-The Cafe Management System is a software application that automates cafe operations, handles menu items, accepts client orders, evaluates employee work hours, and manages membership benefits. This system ensures accuray in transaction processing, appliance maintenance, and customer membership benefits. 
+The Cafe Management System is a software application that automates and ensures the accuracy of cafe operations, handles menu items, accepts client orders, evaluates employee work hours, and manages membership benefits.
 
 ## Features 
+
 ### Menu Item Categories
 
 * Pastries (Sweet, Savory)
@@ -19,8 +20,20 @@ The Cafe Management System is a software application that automates cafe operati
 ### Membership System
 * **Levels**: Guest (Defaults), Bronze (Free), Silver ($5 per month), Guest ($15 per month)
 * **Rewards**: Points discounts according to membership level.
-* ** Membership Authorization**: Manages sign-up, sign-in, and benefits.
+* **Membership Authorization**: Manages sign-up, sign-in, and benefits.
 
+## How to Run
+- Java JDK 8 or later
+- An IDE like IntelliJ IDEA or Eclipse
+- Clone repository 
+- Open repository in your preferred IDE
+- Complie and Run Main.java
+- When starting up, the system will ask for a code, enter the employee access code 151
+- Follow the prompts that pop up after entering the access code
+- If you would like to shut down the program type EXIT in all caps
 
-
-  
+Run the program without running test:
+```
+$ javac -d out $(find src -name "*.java" ! -path "src/test/*")
+$ java -cp out Main   
+```
