@@ -1,5 +1,7 @@
 package machines;
 
+import exceptions.MachineFailureException;
+
 public interface Maintainable {
 
     void useMachine() throws MachineFailureException;

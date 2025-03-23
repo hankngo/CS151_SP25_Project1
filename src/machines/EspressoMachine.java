@@ -1,5 +1,7 @@
 package machines;
 
+import exceptions.MachineFailureException;
+
 public class EspressoMachine extends Machine {
 
     @Override

@@ -1,5 +1,7 @@
 package machines;
 
+import exceptions.MachineFailureException;
+
 public abstract class Machine implements Maintainable {
 
     private boolean brokenStatus;

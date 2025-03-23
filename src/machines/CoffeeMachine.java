@@ -1,5 +1,7 @@
 package machines;
 
+import exceptions.MachineFailureException;
+
 public class CoffeeMachine extends Machine {
 
     int numCoffeeMachines = 0;
