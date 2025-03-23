@@ -3,25 +3,25 @@ package machines;
 import exceptions.MachineFailureException;
 import exceptions.TooManyInstanceException;
 
-public class EspressoMachine extends Machine {
+public class Kettle extends Machine {
 
-    private int numEspressoMachines = 0;
+    private int numKettles = 0;
 
-    public EspressoMachine() throws TooManyInstanceException
+    public Kettle() throws TooManyInstanceException
     {
-        if(numEspressoMachines > 100)
+        if(numKettles > 100)
         {
-            throw new TooManyInstanceException("Too many espresso machines! (>100)");
+            throw new TooManyInstanceException("Too many kettle machines! (>100)");
         }
         else
         {
-            numEspressoMachines++;
+            numKettles++;
         }
     }
 
-    public void createEspresso(int num)
+    public void createTea(int num)
     {
-        System.out.println("Attempting to create espresso...");
+        System.out.println("Attempting to create tea...");
         for(int i = 0; i < num; i++)
         {
             try 
@@ -38,7 +38,7 @@ public class EspressoMachine extends Machine {
                 addUses(1);
             }
         }
-        System.out.println("Created " + num + " orders of espresso.");
+        System.out.println("Created " + num + " orders of tea.");
     }
 
     @Override
@@ -50,8 +50,8 @@ public class EspressoMachine extends Machine {
         if(random < failureOdds)
         {
             setBrokenStatus(true);
-            System.out.println("Espresso machine broke.");
-            throw new MachineFailureException("The espresso machine needs to be repaired.");
+            System.out.println("Kettle broke.");
+            throw new MachineFailureException("The kettle needs to be repaired.");
         }
     }
 
@@ -61,10 +61,10 @@ public class EspressoMachine extends Machine {
         setBrokenStatus(false);
         //Subtract 70% of uses from the uses counter to simulate realism in repairing machine
         addUses(-1 * (int)(getUses() * 0.7));
-        System.out.println("Repaired espresso machine.");
+        System.out.println("Repaired kettle.");
 
-        //Cost of repair: $150-550
-        double randomCost = (int)(((Math.random() * 400) + 150) * 100) / 100.0;
+        //Cost of repair: $75-150
+        double randomCost = (int)(((Math.random() * 75) + 75) * 100) / 100.0;
         totalMachineRepairCosts += randomCost;
         totalMachineRepairCosts = (int)(totalMachineRepairCosts * 100) / 100.0;
     }
@@ -72,7 +72,7 @@ public class EspressoMachine extends Machine {
     @Override
     public double failureOdds()
     {
-        return 0.0001 + (0.00011 * getUses());
+        return 0.0001 + (0.00003 * getUses());
     }
     
 }
