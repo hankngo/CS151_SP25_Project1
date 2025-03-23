@@ -4,6 +4,8 @@ package cafe;
 import java.util.HashMap;
 import java.util.Map;
 
+import exceptions.TooManyInstanceException;
+
 public class Cafe {
     private Map<String, MenuItem> menuItems;
 
@@ -13,7 +15,8 @@ public class Cafe {
     }
 
     // Adding menu item
-    public void addMenuItem(MenuItem item) {
+    public void addMenuItem(MenuItem item) throws TooManyInstanceException {
+        if (menuItems.size() >= 100) {throw new TooManyInstanceException("Too many instance! Unfortunately, our cafe only has up to 100 items.");}
         menuItems.put(item.getName(), item);
     }
 

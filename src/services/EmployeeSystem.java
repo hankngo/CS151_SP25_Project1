@@ -15,6 +15,7 @@ import java.util.HashMap;
 
 import model.Employee;
 import exceptions.EmployeeSystemException;
+import exceptions.TooManyInstanceException;
 
 public class EmployeeSystem implements IEmployeeSystem {
     private static final int MANAGERCODE = 151; // default
@@ -45,25 +46,59 @@ public class EmployeeSystem implements IEmployeeSystem {
      * Adds a new employee with a unique code. But only the manager able to do so.
      */
     @Override
-    public void addEmployee(Employee employee, Employee manager) throws IllegalArgumentException, EmployeeSystemException {
-        if (employee == null) {  
-            throw new IllegalArgumentException("Error: Cannot add a null employee.");
-        }
+    public void addEmployeeByName(String fname, String lname, Employee manager) throws IllegalArgumentException, EmployeeSystemException, TooManyInstanceException {
+        if (employees.size() >= 100) {throw new TooManyInstanceException("Too many instances! Cart can only add up to 100 items.");}
 
-        if (manager == null || !isManager(manager)) {
-            throw new EmployeeSystemException("Access Denied: Only a manager can add employees.");
-        }
+        if (manager == null) {throw new IllegalArgumentException("Invalid argument. Manager is null!");}
+        if (!isManager(manager)) {throw new EmployeeSystemException("Access Denied: Only a manager can add employees.");}
 
-        if (!employees.containsKey(employee)) {
+        boolean isFound = false;
+        for (Employee e : employees.keySet()) {
+            if (e.getName().equals(fname + " " + lname)) {
+                isFound = true;
+                break;
+            }
+        }
+        if (!isFound) {
+            Employee newEmployee = new Employee(fname, lname);
             int code;
             do {
                 code = random.nextInt(1000);
             } while (login(code) != null);
-            employee.setCode(code);
-            employees.put(employee, "employee");
-            System.out.println(employee.getName() + " added with code: " + code);
+            newEmployee.setCode(code);
+            employees.put(newEmployee, "employee");
+            System.out.printf("%s added with code: %d.\n", newEmployee.getName(), code);
         } else {
-            System.out.println("Employee already exists.");
+            throw new EmployeeSystemException("Employee already exists. Please enter a different name!");
+        }
+    }
+
+    /**
+     * Remove an employee with a unique code. But only the manager able to do so.
+     */
+    @Override
+    public void removeEmployeeByCode(int code, Employee manager) throws IllegalArgumentException, EmployeeSystemException {
+        if (manager == null || !isManager(manager)) {
+            throw new EmployeeSystemException("Access Denied: Only a manager can add employees.");
+        }
+
+        Employee foundEmployee = null;
+        for (Employee e : employees.keySet()) {
+            if (e.getCode() == code) {
+                foundEmployee = e;
+                break;
+            }
+        }
+        
+        if (foundEmployee != null) {
+            if (!employees.get(foundEmployee).equals(AUTHORIZED)) {
+                employees.remove(foundEmployee);
+                System.out.printf("Employee with code=%d is removed from the system.\n", code);
+            } else {
+                throw new EmployeeSystemException("You can't remove yourself as the manager!");
+            }
+        } else {
+            throw new EmployeeSystemException("Employee not found. Re-enter the code!");
         }
     }
 
@@ -90,7 +125,7 @@ public class EmployeeSystem implements IEmployeeSystem {
     }
 
     @Override
-    public void trackEmployeeHours(Employee employee, int hours) {
+    public void trackEmployeeHours(Employee employee, double hours) {
         employee.trackHours(hours);
         System.out.println(employee.getName() + " has " + employee.getHoursWorked() + " hours worked.");
     }
