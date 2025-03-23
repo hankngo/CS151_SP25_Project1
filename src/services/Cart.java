@@ -29,6 +29,7 @@ import membership.Member;
 import membership.MemberSignInUp;
 import model.Employee;
 import exceptions.CheckoutException;
+import exceptions.TooManyInstanceException;
 
 
 public class Cart {
@@ -54,13 +55,15 @@ public class Cart {
      * Put in order calls item from menuitem class
      * @param itemID
      */
-    public void addItem(int itemID) throws IllegalArgumentException {
+    public void addItem(int itemID) throws IllegalArgumentException, TooManyInstanceException {
+        if (cart.size() >= 100) {throw new TooManyInstanceException("Too many instances! Cart can only add up to 100 items.");}
+
         MenuItem addedItem = cafe.findMenuItemById(itemID);
         if (addedItem != null) {
             cart.add(addedItem);
             System.out.printf("Added item ID: %d\n", itemID);
         } else {
-            throw new IllegalArgumentException("Item not avaiable in cafe's menu!");
+            throw new IllegalArgumentException("Item not available in cafe's menu!");
         }
     }
 
@@ -116,10 +119,10 @@ public class Cart {
         CheckoutOptions checkoutChoice = null;
         String input;
         do {
-            System.out.print("\n1. PAY \t2. CANCEL\nCheckout: ");
+            System.out.print("\n1. PAY \t2. CANCEL\tOr press ENTER to go back\nCheckout: ");
             try {
                 input = scanner.nextLine().trim();
-                if (input.equalsIgnoreCase(EXIT)) break;
+                if (input.equalsIgnoreCase(EXIT) || input.equals("")) break;
                 checkoutChoice = getCheckoutOpt(Integer.parseInt(input));
                 if (checkoutChoice == null) { 
                     System.out.println("Unexpected checkout choice!"); 

@@ -1,5 +1,6 @@
 import cafe.*;
 import exceptions.EmployeeSystemException;
+import exceptions.TooManyInstanceException;
 import model.Employee;
 import services.Cart;
 import services.EmployeeSystem;
@@ -61,9 +62,9 @@ public class Main {
             String lname = names[names.length - 1];
             try {
                 es.addEmployeeByName(fname, lname, manager);
-            } catch (EmployeeSystemException e) {
+            } catch (EmployeeSystemException | TooManyInstanceException e) {
                 System.out.println(e.getMessage());
-            }
+            } 
         }
     }
 
@@ -122,7 +123,11 @@ public class Main {
                 "Coffee Menu");
 
         // Add the latte to the cafe's menu.
-        cafe.addMenuItem(latte);
+        try {
+            cafe.addMenuItem(latte);
+        } catch (TooManyInstanceException e) {
+            System.out.println(e.getMessage());
+        }
 
         // Display the cafe's menu.
         cafe.displayMenu();

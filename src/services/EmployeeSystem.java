@@ -15,6 +15,7 @@ import java.util.HashMap;
 
 import model.Employee;
 import exceptions.EmployeeSystemException;
+import exceptions.TooManyInstanceException;
 
 public class EmployeeSystem implements IEmployeeSystem {
     private static final int MANAGERCODE = 151; // default
@@ -45,7 +46,9 @@ public class EmployeeSystem implements IEmployeeSystem {
      * Adds a new employee with a unique code. But only the manager able to do so.
      */
     @Override
-    public void addEmployeeByName(String fname, String lname, Employee manager) throws IllegalArgumentException, EmployeeSystemException {
+    public void addEmployeeByName(String fname, String lname, Employee manager) throws IllegalArgumentException, EmployeeSystemException, TooManyInstanceException {
+        if (employees.size() >= 100) {throw new TooManyInstanceException("Too many instances! Cart can only add up to 100 items.");}
+
         if (manager == null) {throw new IllegalArgumentException("Invalid argument. Manager is null!");}
         if (!isManager(manager)) {throw new EmployeeSystemException("Access Denied: Only a manager can add employees.");}
 
