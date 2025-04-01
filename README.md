@@ -21,7 +21,7 @@ The Cafe Management System is a software application that automates and ensures 
 * **Maintainable**: Use to tracks applicance use and recommends repair after a certain number of uses to avoid machine failure.
 
 ### Membership System
-* **Levels**: Guest (Defaults), Bronze (Free), Silver ($5 per month), Guest ($15 per month)
+* **Levels**: Guest (Defaults), Bronze (Free), Silver ($5 per month), Gold ($15 per month)
 * **Rewards**: Points discounts according to membership level.
 * **Membership Authorization**: Manages sign-up, sign-in, and benefits.
 
